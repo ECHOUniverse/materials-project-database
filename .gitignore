@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+
+# uv
+# uv.lock 提交以锁定依赖版本
+
+# 测试产物
+**/tests/tmp/
+*.out

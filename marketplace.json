@@ -1,0 +1,25 @@
+{
+  "name": "materials-project-local",
+  "version": 1,
+  "description": "本地 marketplace：Materials Project 数据库插件",
+  "description_i18n": {
+    "en": "Local marketplace hosting the Materials Project database plugin",
+    "zh-CN": "本地 marketplace：Materials Project 数据库插件"
+  },
+  "owner": { "name": "hanxu" },
+  "plugins": [
+    {
+      "name": "materials-project",
+      "source": "./plugins/materials-project",
+      "version": "0.1.0",
+      "description": "Materials Project database search, crystal structure retrieval and processing",
+      "description_i18n": {
+        "en": "Materials Project database search, crystal structure retrieval and processing",
+        "zh-CN": "Materials Project 数据库查询、晶体结构获取与处理"
+      },
+      "author": { "name": "hanxu" },
+      "category": "scientific-computing",
+      "keywords": ["materials-project", "crystal", "mp-api"]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+[project]
+name = "materials-project-plugin"
+version = "0.1.0"
+description = "Materials Project 数据库查询、晶体结构获取与处理工具集（ZCode 插件脚本依赖）"
+requires-python = ">=3.11"
+dependencies = [
+    "mp-api>=0.41",
+    "pymatgen>=2024.10.0",
+]
+
+[tool.uv]
+# 依赖以 uv.lock 锁定；mp-api 拉取 pymatgen/emmet-core

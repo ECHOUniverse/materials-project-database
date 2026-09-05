@@ -1,0 +1,15 @@
+{
+  "name": "materials-project",
+  "version": "0.1.0",
+  "description": "Materials Project database search, crystal structure retrieval and processing",
+  "description_i18n": {
+    "en": "Materials Project database search, crystal structure retrieval and processing",
+    "zh-CN": "Materials Project 数据库查询、晶体结构获取与处理工具集"
+  },
+  "displayName": "Materials Project",
+  "author": { "name": "hanxu" },
+  "license": "MIT",
+  "keywords": ["materials-project", "crystal", "pymatgen", "mp-api"],
+  "skills": "skills",
+  "commands": "commands"
+}
