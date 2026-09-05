@@ -19,13 +19,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _mp_common import handle_api_error, make_rester, fmt_num  # noqa: E402
 
 DEFAULT_FIELDS = [
-    "material_id", "formula_pretty", "spacegroup_symbol", "crystal_system",
+    "material_id", "formula_pretty", "symmetry",
     "band_gap", "energy_above_hull", "is_stable", "density", "volume",
 ]
 FIELD_LABELS = {
     "material_id": "material_id",
     "formula_pretty": "化学式",
-    "spacegroup_symbol": "空间群",
+    "symmetry": "空间群",
     "crystal_system": "晶系",
     "band_gap": "带隙 (eV)",
     "energy_above_hull": "E_hull (eV/atom)",
@@ -33,6 +33,15 @@ FIELD_LABELS = {
     "density": "密度 (g/cm³)",
     "volume": "体积 (Å³)",
 }
+
+
+def symmetry_attr(sym, name):
+    """从 symmetry 字段（pydantic 对象或 dict）提取子属性。"""
+    if sym is None:
+        return None
+    if isinstance(sym, dict):
+        return sym.get(name)
+    return getattr(sym, name, None)
 
 
 def parse_args():
@@ -80,7 +89,7 @@ def build_kwargs(args):
     if args.spacegroup:
         kw["spacegroup_symbol"] = args.spacegroup
     if args.num_elements:
-        kw["num_elements"] = tuple(args.num_elements)
+        kw["nelements"] = tuple(args.num_elements)
     return kw
 
 
@@ -102,7 +111,12 @@ def render_markdown(docs, fields):
     for d in docs:
         row = []
         for f in fields:
-            v = doc_get(d, f)
+            if f == "symmetry":
+                v = symmetry_attr(doc_get(d, "symmetry"), "symbol")
+            elif f == "crystal_system":
+                v = symmetry_attr(doc_get(d, "symmetry"), "crystal_system")
+            else:
+                v = doc_get(d, f)
             if f in ("band_gap", "energy_above_hull", "density", "volume"):
                 row.append(fmt_num(v))
             elif f == "is_stable":

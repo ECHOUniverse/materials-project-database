@@ -21,11 +21,11 @@ from _mp_common import (  # noqa: E402
 )
 
 SUMMARY_FIELDS = [
-    "material_id", "formula_pretty", "formula_anonymous", "spacegroup_symbol",
-    "spacegroup_number", "crystal_system", "density", "volume", "nsites",
+    "material_id", "formula_pretty", "formula_anonymous", "symmetry",
+    "density", "volume", "nsites", "nelements",
     "band_gap", "is_stable", "energy_above_hull", "formation_energy_per_atom",
-    "uncorrected_energy_per_atom", "magnetic_ordering", "is_magnetic",
-    "total_magnetization", "num_elements", "theoretical",
+    "uncorrected_energy_per_atom", "ordering", "is_magnetic",
+    "total_magnetization", "theoretical",
 ]
 
 
@@ -66,20 +66,23 @@ def fetch(mpid, cell_args):
 
 
 def render_md(summary, structure, mpid, want_structure, cell_tag):
+    sym = summary.get("symmetry") or {}
+    if not isinstance(sym, dict):
+        sym = sym.model_dump(mode="json") if hasattr(sym, "model_dump") else {}
     lines = [f"# {summary.get('formula_pretty', mpid)}（{mpid}）", ""]
     rows = [
         ("化学式（约简）", summary.get("formula_pretty")),
         ("化学式（匿名）", summary.get("formula_anonymous")),
-        ("空间群", f"{summary.get('spacegroup_symbol', '—')} (No.{summary.get('spacegroup_number', '—')})"),
-        ("晶系", summary.get("crystal_system")),
-        ("原子数 / 元素数", f"{summary.get('nsites', '—')} / {summary.get('num_elements', '—')}"),
+        ("空间群", f"{sym.get('symbol', '—')} (No.{sym.get('number', '—')})"),
+        ("晶系", sym.get("crystal_system")),
+        ("原子数 / 元素数", f"{summary.get('nsites', '—')} / {summary.get('nelements', '—')}"),
         ("体积 (Å³)", fmt_num(summary.get("volume"))),
         ("密度 (g/cm³)", fmt_num(summary.get("density"))),
         ("带隙 (eV, GGA)", fmt_num(summary.get("band_gap"))),
         ("形成能 (eV/atom)", fmt_num(summary.get("formation_energy_per_atom"))),
         ("E_above_hull (eV/atom)", fmt_num(summary.get("energy_above_hull"))),
         ("热力学稳定", "✓" if summary.get("is_stable") else "✗"),
-        ("磁性序", summary.get("magnetic_ordering") or "—"),
+        ("磁性序", summary.get("ordering") or "—"),
         ("理论计算数据", "是" if summary.get("theoretical") else "否"),
     ]
     lines.append("| 属性 | 值 |")
