@@ -11,11 +11,30 @@
 
 实现为 **Skill + CLI 脚本**（uv 管理依赖，`mp-api` + `pymatgen`），脚本输出对 agent 友好的 Markdown / JSON。
 
-## 安装（本地 marketplace）
+## 安装
 
-1. 打开 ZCode **Settings → Plugin Management → Discover → `+`**，选择本仓库根目录（含 `marketplace.json`）添加为 marketplace
-2. 安装其中的 `materials-project` 插件并启用
-3. 安装后即获得技能 `mp-database` 与三个斜杠命令：`/mp-search`、`/mp-get`、`/mp-process`
+### 方式一：远程仓库（推荐）
+
+1. 打开 ZCode **Settings → Plugin Management → Discover → `+`**，选择 **Git URL**，填入本仓库地址：
+   ```
+   https://github.com/ECHOUniverse/materials-project-database.git
+   ```
+   （SSH 方式填 `git@github.com:ECHOUniverse/materials-project-database.git`）
+2. 在发现的 marketplace 中安装 `materials-project` 插件并启用
+3. 插件更新后，在插件管理页点击更新即可拉取最新版本
+
+### 方式二：本地目录
+
+1. 克隆本仓库（或直接使用本地工作副本）：
+   ```bash
+   git clone https://github.com/ECHOUniverse/materials-project-database.git
+   ```
+2. 打开 ZCode **Settings → Plugin Management → Discover → `+`**，选择本地路径指向仓库根目录（含 `marketplace.json`）
+3. 安装其中的 `materials-project` 插件并启用
+
+### 安装后
+
+即获得技能 `mp-database` 与三个斜杠命令：`/mp-search`、`/mp-get`、`/mp-process`。
 
 ## 配置 API key（必需）
 
